@@ -1,5 +1,7 @@
 import 'package:firebase_auth_app/screens/auth.dart';
+import 'package:firebase_auth_app/screens/home_screen.dart';
 import 'package:firebase_auth_app/screens/login_screen.dart';
+import 'package:firebase_auth_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -21,7 +23,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const Auth(),
+      // home: const Auth(),
+      routes: {
+        '/':(context) => const Auth(),
+        'loginScreen':(context) => const LoginScreen(),
+        'signupScreen':(context) => const SignupScreen(),
+        'homeScreen':(context) => const HomeScreen(),
+      },
     );
   } 
 }

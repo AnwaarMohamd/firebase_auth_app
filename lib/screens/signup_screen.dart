@@ -2,33 +2,49 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final  _emailController = TextEditingController();
   final  _passwordController = TextEditingController();
+  final  _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
-  void openSignupScreen() {
-    Navigator.of(
-      context).pushReplacementNamed('signupScreen');
+ 
+
+  Future signUp() async {
+    if(passwordConfirmed()){
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      ); 
+      Navigator.of(context).pushNamed('/');
+    }
   }
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    ); 
+  bool passwordConfirmed(){
+    if(_passwordController.text.trim() ==
+    _confirmPasswordController.text.trim()){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+   void openSigninScreen() {
+    Navigator.of(
+      context).pushReplacementNamed('loginScreen');
   }
   @override
   Widget build(BuildContext context) {
@@ -50,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // title
             
                 Text(
-                  'Sign In',
+                  'Sign Up',
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: GoogleFonts.robotoCondensed(
@@ -61,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // subtitle
                 SizedBox(height: 10),
                 Text(
-                  'Welcome back! Please login to your account.',
+                  'Welcome! Please create an account.',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey[600],
@@ -99,14 +115,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-            
-                // login button
-            
+
+                // confirm password textfield
+                SizedBox(height: 2),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Confirm Password',
+                      
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+
+
+                // Sign Up button
+
                 SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
-                    onTap: signIn,
+                    onTap: signUp,
                     child: Container(
                       width: double.infinity,
                       height: 70,
@@ -116,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                             fontSize: 23,
                             fontFamily: GoogleFonts.robotoCondensed(
@@ -130,23 +164,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
             
-                // signup text
+                // signin text
                 
-                SizedBox(height: 10),
+                SizedBox(height: 2),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      "Do you already have an account? ",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
                       ),
                     ),
                     GestureDetector(
-                      onTap:openSignupScreen,
+                      onTap:openSigninScreen,
                       child: Text(
-                        'Sign Up',
+                        'Sign In',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.blue,
