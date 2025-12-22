@@ -1,7 +1,7 @@
-import 'package:firebase_auth_app/screens/auth.dart';
-import 'package:firebase_auth_app/screens/home_screen.dart';
-import 'package:firebase_auth_app/screens/login_screen.dart';
-import 'package:firebase_auth_app/screens/signup_screen.dart';
+import 'package:firebase_auth_app/ui/screens/auth.dart';
+import 'package:firebase_auth_app/ui/screens/home_screen.dart';
+import 'package:firebase_auth_app/ui/screens/login_screen.dart';
+import 'package:firebase_auth_app/ui/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
