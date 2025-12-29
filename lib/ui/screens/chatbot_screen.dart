@@ -16,7 +16,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   final controller = TextEditingController();
   final List<Map<String, dynamic>> messages = [];
 
-  bool isTyping = false; // 👈 البوت بيكتب ولا لأ
+  bool isTyping = false; // البوت بيكتب ولا لأ
 
   Future<void> sendMessage() async {
     if (controller.text.isEmpty) return;
@@ -36,7 +36,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
     controller.clear();
 
-    // ⏳ تأخير بسيط كأنه بيفكر
+    // تأخير بسيط كأنه بيفكر
     await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
@@ -56,32 +56,35 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text("Bot Chat"),
+
         backgroundColor: AppColors.primary,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: messages.length + (isTyping ? 1 : 0),
-              itemBuilder: (_, i) {
-                // 👇 لو البوت بيكتب
-                if (isTyping && i == messages.length) {
-                  return const TypingIndicator();
-                }
-
-                return ChatBubble(
-                  text: messages[i]["text"],
-                  isUser: messages[i]["isUser"],
-                );
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(12),
+                itemCount: messages.length + (isTyping ? 1 : 0),
+                itemBuilder: (_, i) {
+                  // 👇 لو البوت بيكتب
+                  if (isTyping && i == messages.length) {
+                    return const TypingIndicator();
+                  }
+        
+                  return ChatBubble(
+                    text: messages[i]["text"],
+                    isUser: messages[i]["isUser"],
+                  );
+                },
+              ),
             ),
-          ),
-          MessageInput(
-            controller: controller,
-            onSend: sendMessage,
-          ),
-        ],
+            MessageInput(
+              controller: controller,
+              onSend: sendMessage,
+            ),
+          ],
+        ),
       ),
     );
   }

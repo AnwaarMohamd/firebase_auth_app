@@ -99,6 +99,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pushNamed('forgotPassword');
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             
                 // login button
             
